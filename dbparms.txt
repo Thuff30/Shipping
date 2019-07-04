@@ -1,0 +1,4 @@
+username=root
+password=sdev300vm99
+host=localhost
+db=alpineshipping

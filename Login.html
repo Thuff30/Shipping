@@ -1,0 +1,35 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="Alpine.css"> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Login</title>
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td width="250"><img src="Alpine-Logowhite-on-blue.jpg" alt="Alpine logo" width="250" height="75"></td>
+			<td id="loginheader">Welcome to the Alpine Shipment Tracking System</td>
+		</tr>
+	</table>
+	<h1></h1>
+	<form name="Login" method="post" action="Authcheck.php">
+		<table id="loginform">
+			<tr>
+				<th colspan=2>User Login</th>
+			</tr>
+			<tr>
+				<td>Username:</td>
+				<td><input type="text" name="user"></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" name="pass"></td>
+			</tr>
+			<tr>
+				<td id="loginbutton"><input type="submit" value="Sign In" name="log"></td>
+				<td></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

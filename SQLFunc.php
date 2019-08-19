@@ -1,5 +1,8 @@
 <?php
-	//include file with general php functions
+	/*This file contains PHP functions for the application to interact with the MySQL database.
+	Each function establishes a connection to the database and interacts using predefined querries*/
+
+	//File with general php functions
 	require_once('PHPFunc.php');
 	
 	//Establish global variables
@@ -7,12 +10,12 @@
 	static $db = 'alpineshipping';
 	
 	
-	//General login
+	//Function for general login
 	function connectdb(){      		
-		// Get the DBParams
+		//Get the DB Parameters
 		$mydbparms = getDbparms();
 		$success = false;
-		// Try to connect
+		//Try to connect to database
 		$mysqli = new mysqli($mydbparms->getHost(), $mydbparms->getUsername(), 
 	                        $mydbparms->getPassword(),$mydbparms->getDb());
 	
@@ -24,7 +27,7 @@
 		return $mysqli;
 	}
 	
-	//function retrive preset db login info
+	//Function to retrieve preset db login info
 	function getDbparms(){
 	 	$trimmed = file('dbparms.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		$key = array();
@@ -34,27 +37,27 @@
 			$key[] = $pairs[0];
 			$vals[] = $pairs[1]; 
 		}
-		// Combine Key and values into an array
+		//Combine key and values into an array
 		$mypairs = array_combine($key,$vals);
 	
-		// Assign values to ParametersClass
+		//Assign values to Parameters Class
 		$myDbparms = new DbparmsClass($mypairs['username'],$mypairs['password'],
 	                $mypairs['host'],$mypairs['db']);
 	
-		// Display the Paramters values
+		//Display the Paramters values
 		return $myDbparms;
 	}
 
-	// Class to construct Database parameters with getters/setter
+	//Class to construct database parameters with getters & setters
 	class DBparmsClass{
 		
-	    // property declaration  
+	    //Property declarations  
 	    private $username="";
 	    private $password="";
 	    private $host="";
 	    private $db="";
 	   
-	    // Constructor
+	    //Constructor
 	    public function __construct($myusername,$mypassword,$myhost,$mydb){
 			$this->username = $myusername;
 			$this->password = $mypassword;
@@ -62,7 +65,7 @@
 			$this->db = $mydb;
 	    }
 	    
-	    // Get methods 
+	    //Getter methods 
 		  public function getUsername (){
 	    	return $this->username;
 	    } 
@@ -76,7 +79,7 @@
 	    	return $this->db;
 	    } 	 
 	
-	    // Set methods 
+	    //Setter methods 
 	    public function setUsername ($myusername){
 	    	$this->username = $myusername;    	
 	    }
@@ -91,7 +94,7 @@
 	    }    
 	}
 	
-	//Connect individual users
+	//Function to connect individual users
 	function indconnectdb($uname, $pass){
 		$mysqli= new mysqli($host, $uname, $pass, $db);
 		
@@ -101,50 +104,50 @@
 		return $mysqli;
 	}
 	
-	//function to enter a new shipment 
+	//Function to enter a new shipment 
 	function insertShipment($client, $carrier, $items, $shipdate, $deliverydate, $tracknum, $status){
 		
-		//establish variable to measure success
+		//Establish variables
 		$success=false;
 		$date = date_create();
 		$dateNow = date_format($date,"Y-m-d"); 		
+		
 		// Connect to the database
 		$mysqli = connectdb();
 		
-	    //find clientID based on BusinessName submitted	   
+	    //Find clientID and carrierID based on information submitted using function from PHPFunc   
 		$clientID = findClient($client);
-			
-		//find carrierID based on Carrier name submitted
 		$carrierID = findCarrier($carrier);
 		
-		//create and prepare query
 		$insertQuery = "INSERT INTO alpineShipping.Shipment (ClientID, CarrierID, ItemsShipping, EstShipDate, EstDelivery, TrackingNum, Status, DateEntered) 
 				VALUES ('".$clientID."', '".$carrierID."', '".$items."', '".$shipdate."', '".$deliverydate."', '".$tracknum."', '".$status."', '".$dateNow."');";
 		
-		//fetch the results of third query and determine successful execution
+		//Fetch the results of query and determine successful execution
 		$mysqli->query($insertQuery);
-		$thirdresult=$mysqli->affected_rows;
+		$result=$mysqli->affected_rows;
 		if($thirdresult>0){
 			$success=true;
 		}
-		//close query and connection
-		$thirdresult->close();
+
+		//Close query and connection
+		$result->close();
 		$mysqli->close();
 		return $success;
 	}
 
-	//function to enter new client
+	//Function to add new client to the database
 	function addClient($business){
-		//Establish success variable
+		//Establish varaibles
 		$success=false;
-		//prepare statements
+
+		//Prepare querry statements
 		$select="SELECT * FROM alpineshipping.Client WHERE BusinessName='".$business."';";
 		$query="INSERT INTO alpineshipping.Client (BusinessName) VALUES ('".$business."');";
 		
 		//Establish connection
 		$mysqli=connectdb();
 		
-		//Check for duplicate entries
+		//Check for duplicate entries in databases
 		if($check=$mysqli->query($select)){
 			$count=mysqli_num_rows($check);
 			if($count==0){
@@ -157,32 +160,31 @@
 		
 		//Close query and connection
 		$mysqli->close();
-		//return result
 		return $success;
 	}
 	
-	//function to return a list of shipments
+	//Function to return a list of shipments based on user search criteria
 	function searchShipments($limit, $order, $client, $carrier, $startdate, $enddate, $status, $tracknum){
 	
-		//prepare main select statement
+		//Establish variables
+		$count=0;
+
+		//Prepare main select statement
 		$select = "SELECT Shipment.ShipmentID, Client.ClientID, Client.BusinessName, Shipment.ItemsShipping, Shipment.EstDelivery, Shipment.Status, Carrier.CarrierID,
 			Carrier.CarrierName, Shipment.TrackingNum, Shipment.Notes, Shipment.DateEntered FROM ((Shipment INNER JOIN Client ON Client.ClientID=Shipment.ClientID)
 			JOIN Carrier ON Carrier.CarrierID=Shipment.CarrierID) ";
-		//variable to track filled fields
-		$count=0;
 
-		//determine which fields have been filled
+		//Determine which fields have been filled on form
 		if($client){
-			//detemine clientID
+			//Detemine clientID using function from PHPFunc
 			$clientID = findClient($client);
-			//append $select
 			$select= $select. "WHERE Shipment.ClientID='".$clientID."' ";
 			$count++;
 		}
 		if($carrier){
-			//determine carrier ID
+			//Determine carrierID  using function from PHPFunc
 			$carrierID = findCarrier($carrier);
-			//determine if previous additions were made to the query
+			//Determine if previous additions were made to the query
 			if($count>0){
 				$select= $select. "AND Shipment.CarrierID='".$carrierID."' ";
 				$count++;
@@ -225,12 +227,12 @@
 				$select = $select. "WHERE Shipment.TrackingNum='".$tracknum."' ";
 			}
 		}
-		//assign limit
+		//Assign value to limit
 		$select = $select. "ORDER BY DateEntered ".$order." LIMIT ".$limit.";";
 		
-		//establish connection
+		//Establish connection
 		$mysqli=connectdb();
-		//retrieve search results
+		//Retrieve search results
 		if($result=$mysqli->query($select)){
 			while($row=$result->fetch_assoc()){
 				$listShipments[]=$row['ShipmentID'];
@@ -239,24 +241,23 @@
 		
 		//Close query and connection
 		$mysqli->close();
-		
 		return $listShipments;
 	}
 	
-	//function to display search results
+	//Function to display search results
 	function viewShipments($shipID){
 		
-		//ensure $allShipments is empty
+		//Clear values for $allShipments
 		$allShipments="";
-		//establish selectg query
+		//Establish select query
 		$select = "SELECT Shipment.ShipmentID, Client.ClientID, Client.BusinessName, Shipment.ItemsShipping, Shipment.EstDelivery, Shipment.Status, Carrier.CarrierID,
 				Carrier.CarrierName, Shipment.TrackingNum, Shipment.Notes, Shipment.DateEntered FROM ((Shipment INNER JOIN Client ON Client.ClientID=Shipment.ClientID)
 				JOIN Carrier ON Carrier.CarrierID=Shipment.CarrierID) WHERE ShipmentID = '".$shipID."';";
 				
-		//establish connection		
+		//Establish connection		
 		$mysqli=connectdb();
 		
-		//store results in an array
+		//Execute select query and store results in an array
 		if($result=$mysqli->query($select)){     
 			while($row = $result->fetch_assoc()){
 				$shipmentID=$row['ShipmentID'];
@@ -275,96 +276,89 @@
 				$allShipments= new ShipmentClass($shipmentID, $clientID, $client, $items, $estdel, $status, $carrierID, $carrier, $tracknum, $notes, $entered);
 			}
 		}
-		//close all queries and connections
+		//Close querry and connection
 		$mysqli->close();
-		
-		//return the object containing the shipment
 		return $allShipments;
 	}
 	
-	//function to populate client dropdown
+	//Function to populate client dropdown
 	function clientDropdown(){
-		//Populate Query
+		//Establish Query
 		$clientQuery= "SELECT BusinessName FROM Client;";
 		
-		//Establish connection and run query
+		//Establish connection and perform query
 		$mysqli=connectdb();
 		$results=$mysqli->query($clientQuery);
 		
-		//Populate options to drop down
+		//Populate options to dropdown
 		while($row=$results->fetch_assoc()){
-			echo "<option value='" . $row['BusinessName'] . "'>" . $row['BusinessName'] . "</option>";
+			echo "<option value='" .$row['BusinessName']. "'>" .$row['BusinessName']. "</option>";
 		}
-		//close query and connection
+		//Close query and connection
 		$results->close();
 		$mysqli->close();
 	}
 	
-	//function to populate carrier drop down
+	//Function to populate carrier dropdown
 	function carrierDropdown(){
-		//Populate query
+		//Establish query
 		$carrierQuery= "SELECT CarrierName FROM Carrier;";
+		
 		//Establish connectionand run query
 		$mysqli=connectdb();
 		$results=$mysqli->query($carrierQuery);
 		
-		//Populate options to drop down
+		//Populate options to dropdown
 		while($row=$results->fetch_assoc()){
 			echo "<option value='" . $row['CarrierName'] . "'>" .$row['CarrierName'] ."</option>";
 		}
-		//close query and connection
+		//Close query and connection
 		$results->close();
 		$mysqli->close();
 	}
 	
-	//function to determine clientID
+	//Function to determine clientID
 	function findClient($business){
 		
-		//prepare initial query to determine client ID
+		//Prepare initial query
 		$selectQuery = "SELECT ClientID FROM Client WHERE BusinessName='".$business."';";
 		
-		//establish connection
+		//establish connection and perform query
 		$mysqli=connectdb();
-		//Run query
 		$results=$mysqli->query($selectQuery);
 		while($row = $results->fetch_assoc()){
 			$clientID=$row['ClientID'];
 		}
-		//Close query
+		//Close query and connection
 		$mysqli->close();
-		
-		//return result
 		return $clientID;
 	}
 	
-	//function to determine carrierID
+	//Function to determine carrierID
 	function findCarrier($carrier){
 		
-		//prepare query to determine carrierID
+		//Prepare query to determine carrierID
 		$selectQuery = "SELECT CarrierID FROM Carrier WHERE CarrierName='".$carrier."';";
 		
-		//Establish connection
+		//Establish connection and perform query
 		$mysqli=connectdb();
-		//Run query
 		$results=$mysqli->query($selectQuery);
 		while($row=$results->fetch_assoc()){
 			$carrierID=$row['CarrierID'];
 		}
-		//close query
+		//Close query and connection
 		$results->close();
-		
-		//return result
 		return $carrierID;
 	}
 	
 	function updateShip($tracknum, $client, $carrier, $estdel, $status){
 		
-		//set variables and main query
+		//Establish variables and main query
 		$count=0;
 		$success = false;
 		$update = "UPDATE alpineshipping.Shipment SET";
 		
-		//determine which fields are filled and append the main query
+		//Determine which fields are filled and append the query
 		if($client){
 			$clientID=findClient($client);
 			$update = $update. " ClientID='".$clientID."'";
@@ -394,15 +388,13 @@
 		}
 		$update=$update. " WHERE TrackingNum='".$tracknum."';";
 		
-		//conect to database and run query
+		//Connect to database and perform query
 		$mysqli=conenctdb();
 		if($result=$mysqli->query($update)){
 			$success = true;
 		}
-		//close the connection
+		//Close the query and connection
 		$mysqli->close();
-		
-		//return the result
 		return $success;
 	}
 ?>

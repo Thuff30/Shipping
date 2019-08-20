@@ -1,32 +1,26 @@
 <?php
 	session_start();  
+	/*This file contains several PHP functions to be used throughout the application*/
 	
-	//Sanitize user input
-	function check_input($data)
-	{
+	//Function to sanitize user input
+	function check_input($data){
 	    $data = trim($data);
 		$data = stripslashes($data);
 	    $data = htmlspecialchars($data);
-		//if($data ==""){
-		//	$data = null;
-		//}
 	    return $data;
 	}
 	
-	//Authenticate user attempting login
+	//Function to authenticate user login
 	function userAuth($uname,$pass){
 	
-		// Init count to 0
 		$count=0;
-		// Connect to the database
-		$mysqli = connectdb();
-		
-		// Define the Query
+		//Establish query
 		$Myquery = "SELECT * FROM alpineshipping.Users WHERE Username='".$uname."';"; 
-		$result=$mysqli->query($Myquery);
-		///Fetch the results of the query 	     
+		
+		//Connect to the database and perform query
+		$mysqli = connectdb();
+		$result=$mysqli->query($Myquery);     
 		while($row = $result->fetch_assoc() ){
-			//verify password against stored password
 			$passcheck = password_verify($pass, $row["Password"]);
 			if($passcheck == true){
 				$count=1;
@@ -35,24 +29,29 @@
 		//close query and connection
 		$result->close();	      
 		$mysqli->close();
-	    
 		return $count;
 	       
 	}
 	
+	//Function to verify user's access level
 	function verifyLevel($uname){
+
+		//Establish query
 		$selectquery="SELECT * FROM alpineshipping.Users WHERE Username='".$uname."';";
+		
+		//Connect to database and perform query
 		$mysqli=connectdb();
 		$result=$mysqli->query($selectquery);
 		while($row=$result->fetch_assoc()){
 			$level=$row['AccessLevel'];
 		}
+		//close query and connection
 		$result->close();
 		$mysqli->close();
 		return $level;
 	}
 	
-	//Start Session
+	//Function to start Session
 	function login($uname, $pass, $level){
 		$_SESSION['uname'] = $uname;
 		$_SESSION['pass'] = $pass;
@@ -61,7 +60,8 @@
 		$timeout_duration = 1800;  
 		$_SESSION['LAST_ACTIVITY'] = $time;
 	}
-	//Logout user
+
+	//Function to logout user
 	function logout($uname){
 		unset($_SESSION['uname']);
 		unset($_SESSION['pass']);
@@ -69,8 +69,9 @@
 		session_destroy();
 	}
 	
+	//Class to organize shipments into objects for review
 	class ShipmentClass{
-		// property declaration    
+		//Property declaration    
 		private	$shipID = "";
 		private $clientID = ""; 
 		private $client = "";	 
@@ -83,7 +84,7 @@
 		private $notes =  "";	 
 		private $entered = "";
    
-		// Constructor
+		//Constructor
 		public function __construct($shipmentID, $clientID, $client, $items, $estdel, $status, $carrierID, $carrier, $tracknum, $notes, $entered){
 			$this->shipmentID = $shipmentID;
 			$this->clientID = $clientID;
@@ -97,7 +98,7 @@
 			$this->notes = $notes;
 			$this->entered = $entered;
 		}
-		 // Get methods 
+		 //Getter methods 
 		public function getShipmentID(){
 			return $this->shipmentID;
 		} 
@@ -132,7 +133,7 @@
 			return $this->entered;
 		} 	   
 
-		// Set methods 
+		//Setter methods 
 		public function setShipmentID($value){
 			$this->shipmentID = $value;    	
 		}

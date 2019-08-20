@@ -1,6 +1,7 @@
 <?php
 	session_start();
 ?>
+<!-- Page to allow the addition of new user profiles -->
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="Alpine.css">
@@ -9,6 +10,7 @@
 </head>
 <body>
 	<?php
+	
 		require_once('PHPFunc.php');
 		require_once('UserFunc.php');
 		//Determine if session is active

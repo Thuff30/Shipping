@@ -1,26 +1,27 @@
 <?php
+	//File containt PHP fucntions to interact with MySQL database
 	require_once('SQLFunc.php');
 	
+	//Define global variables
 	$host= 'localhost';
 	
-	//function to add a new user
+	//Function to add a new user
 	function addUser($uname, $pass, $level){
-		//variable to show sucess
+		//Deinfe variables and SQL statements
 		$success=false;
 		$pass=password_hash($pass, PASSWORD_DEFAULT);
-		//Create queries to add user
 		$select="SELECT * FROM alpineshipping.Users WHERE Username='".$uname."';";
 		$newUser="CREATE USER '".$uname."'@'".$host."' IDENTIFIED BY '".$pass."';";
 		$usertable="INSERT INTO alpineshipping.Users VALUES ('".$uname."','".$pass."','".$level."');";
 		
-		//establish connection
+		//establish connection and perform queries
 		$mysqli=connectdb();
 		if($check=$mysqli->query($select)){
 			$count=mysqli_num_rows($check);
 			if($count==0){
 				$results=$mysqli->query($newUser);
-				//prepare statement to determine user access
 				switch($level){
+					//Prepare statement for correct user access level
 					case '1':
 						$access = "GRANT SELECT on alpineshipping.* to '".$uname."'@'".$host."';";
 						break;
@@ -31,9 +32,7 @@
 						$access="GRANT ALL on alpineshipping.* to '".$uname."'@'".$host."';";
 						break;
 				}
-				//run query to assign privileges
 				$privileges=$mysqli->query($access);
-				//determine success
 				if($tableup=$mysqli->query($usertable)){
 					$success=true;
 				}
@@ -41,22 +40,19 @@
 		}
 		//close all queries and connections
 		$mysqli->close();
-		
 		return $success;
 	}
 	
-	//function to change user password
+	//Function to change user password
 	function passChange($uname, $pass, $newpass){
-		//Set variable to determine success
+		//Establish variable and SQL statements
 		$success=false;
-		//create query to alter user
 		$haspass= password_hash($newpass, PASSWORD_DEFAULT);
 		$alterUser="ALTER USER '".$uname."'@'".$host."' IDENTIFIED BY '".$newpass."';";
 		$passconf = "SELECT * FROM alpineshipping.Users WHERE Username='".$uname."';";
 		$usertable="UPDATE alpineshipping.Users SET Password='".$haspass."' WHERE Username='".$uname."';";
-		//establish connection
+		//Establish connection and perform queries
 		$mysqli=connectdb();
-		//run queries
 		if($check=$mysqli->query($passconf)){
 			$passcheck = password_verify($pass, $row['Password']);
 			if($passcheck==true){
@@ -74,14 +70,13 @@
 		return $success;
 	}
 	
-	//function to delete users
+	//Function to delete users from database
 	function deleteUser($uname){
 		//Prepare queries to remove user and revoke privileges
 		$privileges="REVOKE ALL on alpineshipping.* FROM '".$uname."'@'".$host."';";
 		$dropUser="DROP USER '".$uname."'@'".$host."';";
-		//establish connection
+		//Establish connection and perform queries
 		$mysqli=connectdb();
-		//run privileges query
 		$resultP=$mysqli->query($privileges);
 		$lines=$resultP->rows_affected;
 		if($lines==1){

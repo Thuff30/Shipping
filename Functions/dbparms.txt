@@ -1,0 +1,4 @@
+username=root
+password=sdev
+host=localhost
+db=shipping

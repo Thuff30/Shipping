@@ -4,7 +4,7 @@
 	<!--Form used to add a shipment to the database-->
 <head>
 <body>
-	<?php require_once('SQLFunc.php'); ?><!--include PHP file to query DB-->
+	<?php require_once('Functions/SQLFunc.php'); ?><!--include PHP file to query DB-->
 	<form name='newship' method='post' action='NewShipment.php'>
 		<table id='newship'>
 			<tr>

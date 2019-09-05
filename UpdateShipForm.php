@@ -1,15 +1,14 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="Alpine.css">
+	<link rel="stylesheet" type="text/css" href="Design.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-	<?php require_once('SQLFunc.php'); ?><!--include PHP file to query DB-->
+	<?php require_once('Functions/SQLFunc.php'); ?><!--include PHP file to query DB-->
 	<form name='updateship' method='post' action='ChangeShip.php'>
 		<table id='changeship'>
 			<tr>
-				<th>Modify Shipment</th>
-				<th></th>
+				<th colspan=2>Modify Shipment</th>
 			</tr>
 			<tr>
 				<td class="a">Tracking Number <input name='tracknum' type='text'></td>

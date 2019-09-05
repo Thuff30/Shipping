@@ -1,15 +1,15 @@
 <?php session_start(); ?>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="Alpine.css">
+	<link rel="stylesheet" type="text/css" href="Design.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Index Shipments</title>
 </head>
 <body>
 	<?php
 		//Require all files needed
-		require_once('PHPFunc.php');
-		require_once('SQLFunc.php');
+		require_once('Functions/PHPFunc.php');
+		require_once('Functions/SQLFunc.php');
 		
 		//determine if user is logged in
 		if(isset($_SESSION['uname'])){
@@ -41,13 +41,7 @@
 		<table id="searchresult">
 			<thead>
 				<tr>
-					<th>Shipment Search Results</th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
+					<th colspan=7>Shipment Search Results</th>
 				</tr>
 			
 				<tr>

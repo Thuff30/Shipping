@@ -1,14 +1,14 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="Alpine.css">
+	<link rel="stylesheet" type="text/css" href="Design.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
 	<?php
 
 		//Require all files needed
-		require_once('PHPFunc.php');
-		require_once('SQLFunc.php');
+		require_once('Functions/PHPFunc.php');
+		require_once('Functions/SQLFunc.php');
 		
 		//Sanitize user input
 		$uname = check_input($_POST['user']);

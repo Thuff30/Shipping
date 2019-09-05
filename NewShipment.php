@@ -4,13 +4,13 @@
 <!-- Page to create a new shipment and update the MySQL database -->
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="Alpine.css">
+	<link rel="stylesheet" type="text/css" href="Design.css">
 	<title>Add New Shipment</title>
 </head>
 <body>
 	<?php
 		//File containing all SQL related PHP functions
-		require_once('SQLFunc.php');
+		require_once('Functions/SQLFunc.php');
 
 		//Determine if user is logged in
 		if(isset($_SESSION['uname'])){

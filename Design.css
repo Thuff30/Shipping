@@ -1,0 +1,467 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+* {
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    color: #333;
+    font-size: 100%;
+    line-height: 1.5;
+}
+body {
+    background: #336799;
+    margin: 0;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+h1{
+	color: white;
+	font-size:2em;
+	text-align: center;
+	font-weight: bold;
+}
+
+h2 {
+	font-size:1.5em;
+	margin:auto;
+	text-align: center;
+	color:red;
+}
+
+h3 {
+	margin:auto;
+	text-align:center;
+	color: white;
+}
+
+p {
+	margin:auto;
+	text-align:center;
+	color: white;
+}
+
+#note {
+	position: absolute;
+	top:425px;
+	left:625px;
+	margin:auto;
+	text-align:center;
+	color: white;
+}
+
+#searchform {
+	position: absolute;
+	top:200px;
+	left:250px;
+	margin:auto;
+	width:70%;
+	border:2px solid #0f0f0f;
+	text-align: center;
+	border-collapse:collapse;
+	box-shadow: 5px 5px 5px #2e3a4c,-5px -5px 5px #2e3a4c;
+}
+#searchform th{
+	column-span:all;
+	font-size:2.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	background-color:#c4daff;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}
+#searchform td.a{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 125px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#searchform td.b{
+	font-size:1.0em;
+	border:none;
+	padding:3px 15px 2px 0px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#searchform tr {
+	font-size:1.0em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#ffffff;
+	color:#000000;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+
+#searchresult {
+	position: absolute;
+	top:460px;
+	left:130px;
+	margin:auto;
+	width:85%;
+	border:2px solid #0f0f0f;
+	text-align: center;
+	border-collapse:collapse;
+	box-shadow: 5px 5px 5px #2e3a4c,-5px -5px 5px #2e3a4c;
+}
+#searchresult th{
+	column-span: all;
+	font-size:2.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	background-color:#c4daff;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}
+#searchresult thead{
+	font-size:1.0em;
+	font-weight: bold;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}
+#searchresult td{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#searchresult td.a{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	vertical-align:middle;
+	width:15%;
+}
+#searchresult td.f{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	vertical-align:middle;
+	width:20%;
+}
+#searchresult td.g{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	vertical-align:middle;
+	width:25%;
+}
+#searchresult tr {
+	font-size:1.0em;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#ffffff;
+	color:#000000;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#searchresult tr:nth-child(even){
+	background-color: #cccccc;
+}
+
+#newship {
+	position: absolute;
+	top:200px;
+	left:425px;
+	margin:auto;
+	width:50%;
+	border:2px solid #0f0f0f;
+	text-align: center;
+	border-collapse:collapse;
+	box-shadow: 5px 5px 5px #2e3a4c,-5px -5px 5px #2e3a4c;
+}
+#newship th{
+	column-span:all;
+	font-size:2.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	background-color:#c4daff;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}
+#newship td.a{
+	font-size:1.0em;
+	border:none;
+	padding:10px 7px 2px 100px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#newship td.b{
+	font-size:1.0em;
+	border:none;
+	padding:10px 75px 2px 0px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#newship tr {
+	font-size:1.0em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#ffffff;
+	color:#000000;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+
+#changeship {
+	position: absolute;
+	top:200px;
+	left:350px;
+	margin:auto;
+	width:60%;
+	border:2px solid #0f0f0f;
+	text-align: center;
+	border-collapse:collapse;
+	box-shadow: 5px 5px 5px #2e3a4c,-5px -5px 5px #2e3a4c;
+}
+#changeship th{
+	column-span:all;
+	font-size:2.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	background-color:#c4daff;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}
+#changeship td.a{
+	font-size:1.0em;
+	border:none;
+	padding:10px 7px 2px 100px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#changeship td.b{
+	font-size:1.0em;
+	border:none;
+	padding:10px 75px 2px 0px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#changeship tr {
+	font-size:1.0em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#ffffff;
+	color:#000000;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+
+#loginheader{
+	background-color: #333;
+	color: white;
+	font-size:2em;
+	text-align: center;
+	font-weight: bold;
+}
+#loginform {
+	position: absolute;
+	left: 550px;
+	top: 300px;
+	margin:auto;
+	width:30%;
+	border:2px solid #0f0f0f;
+	text-align: center;
+	border-collapse:collapse;
+	box-shadow: 5px 5px 5px #2e3a4c,-5px -5px 5px #2e3a4c;
+	}
+#loginform th{
+	column-span:all;
+	font-size:1.5em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	background-color:#c4daff;
+	border-collapse:collapse;
+	text-align: center;
+	vertical-align:middle;
+}
+#loginform td{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	vertical-align:middle;
+	text-align:center;
+}
+#loginform tr {
+	font-size:1.0em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#ffffff;
+	color:#000000;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#loginbutton{
+	column-span:all;
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	text-align: center;
+	vertical-align:middle;
+}
+
+#myerror {
+	margin:auto;
+	width:40%;
+	text-align: center;
+	text-decoration-color:red;
+}
+
+#lonetd{
+	column-span:all;
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}
+
+#userform {
+	position: absolute;
+	top:200px;
+	left:325px;
+	margin:auto;
+	width:60%;
+	border:2px solid #0f0f0f;
+	text-align: center;
+	border-collapse:collapse;
+	box-shadow: 5px 5px 5px #2e3a4c,-5px -5px 5px #2e3a4c;
+}
+#userform th{
+	column-span:all;
+	font-size:2.0em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	background-color:#c4daff;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}
+#userform td.a{
+	font-size:1.0em;
+	border:none;
+	padding:10px 7px 2px 100px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#userform td.b{
+	font-size:1.0em;
+	border:none;
+	padding:10px 75px 2px 0px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#userform tr {
+	font-size:1.0em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#ffffff;
+	color:#000000;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+
+#clientform {
+	position: absolute;
+	column-span:all;
+	left: 550px;
+	top: 300px;
+	margin:auto;
+	width:30%;
+	border:2px solid #0f0f0f;
+	text-align: center;
+	border-collapse:collapse;
+	box-shadow: 5px 5px 5px #2e3a4c,-5px -5px 5px #2e3a4c;
+}
+#clientform  th{
+	column-span: all;
+	font-size:1.5em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	background-color:#c4daff;
+	border-collapse:collapse;
+	text-align: center;
+	vertical-align:middle;
+}
+#clientform  td{
+	font-size:1.0em;
+	border:none;
+	padding:15px 7px 2px 7px;
+	border-collapse:collapse;
+	vertical-align:middle;
+	text-align:center;
+}
+
+#clientform  tr {
+	font-size:1.0em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#ffffff;
+	color:#000000;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#mybuttona{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 225px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+#mybuttonb{
+	font-size:1.0em;
+	border:none;
+	padding:3px 7px 2px 90px;
+	border-collapse:collapse;
+	vertical-align:middle;
+}
+
+#coltitle{
+	font-size:1.5em;
+	border:none;
+	padding:3px 7px 2px 7px;
+	border-collapse:collapse;
+	text-align:center;
+	vertical-align:middle;
+}

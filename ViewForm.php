@@ -1,4 +1,4 @@
-<?php require_once('SQLFunc.php'); ?>
+<?php require_once('Functions/SQLFunc.php'); ?>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,16 +11,12 @@
 			<tr>
 				<td class="a">Client <input type="text" list='client' name='client'>
 					<datalist id='client'>
-					<?php
-						clientDropdown();
-					?>
+					<?php clientDropdown(); ?>
 					</datalist>
 				</td>
 				<td class="b">Carrier <input type='text' list='carrier' name='carrier'>
 					<datalist id='carrier'>
-					<?php
-						carrierDropdown();
-					?>
+					<?php carrierDropdown(); ?>
 					</datalist>
 				</td>
 			</tr>

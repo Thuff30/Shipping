@@ -1,15 +1,15 @@
 <?php session_start(); ?>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="Alpine.css">
+	<link rel="stylesheet" type="text/css" href="Design.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Update Shipment</title>
 </head>
 <body>
 	<?php
 		//include all necessary files
-		require_once('PHPFunc.php');
-		require_once('UserFunc.php');
+		require_once('Functions/PHPFunc.php');
+		require_once('Functions/UserFunc.php');
 		
 		//Determine is session is expired
 		if(isset($_SESSION['uname'])){

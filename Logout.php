@@ -6,7 +6,7 @@
 </head>
 <body>
 	<?php
-		require_once('PHPFunc.php');
+		require_once('Functions/PHPFunc.php');
 		
 		logout($_SESSION['uname']);
 		include('Login.html');

@@ -2,15 +2,15 @@
 <!-- Page to add a new client to the database -->
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="Alpine.css">
+	<link rel="stylesheet" type="text/css" href="Design.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Add New Client</title>
 <head>
 <body>
 	<?php
 		//Files containing PHP general functions and functions to interact with MySQL database
-		require_once('PHPFunc.php');
-		require_once('SQLFunc.php');
+		require_once('Functions/PHPFunc.php');
+		require_once('Functions/SQLFunc.php');
 
 		//Determine if session is active
 		if(isset($_SESSION['uname'])){

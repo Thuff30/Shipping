@@ -48,17 +48,17 @@ BEGIN
     SELECT CarrierID FROM Carrier WHERE CarrierName=carrierin;
 END//
 
-CREATE PROCEDURE showCarriers(OUT Carriers)
+CREATE PROCEDURE showCarriers(OUT Carriers VARCHAR(100))
 BEGIN
     SELECT CarrierName from Carrier;
 END//
 
-CREATE PROCEDURE showClient(OUT Clients)
+CREATE PROCEDURE showClient(OUT Clients VARCHAR(100))
 BEGIN 
     SELECT BusinessName from Client;
 END//
 
-CREATE PROCEDURE viewShips(IN shipID)
+CREATE PROCEDURE viewShips(IN shipID INT)
 BEGIN
     SELECT Shipment.ShipmentID, Client.ClientID, Client.BusinessName, Shipment.ItemsShipping, Shipment.EstDelivery, Shipment.Status, Carrier.CarrierID,
 				Carrier.CarrierName, Shipment.TrackingNum, Shipment.Notes, Shipment.DateEntered FROM ((Shipment INNER JOIN Client ON Client.ClientID=Shipment.ClientID)
@@ -67,12 +67,12 @@ END//
 
 CREATE PROCEDURE insertShip(IN client INT, IN carrier INT, IN item VARCHAR(100), IN shipped DATE, IN deliver DATE, IN track INT, IN stat VARCHAR(10))
 BEGIN
-    INSERT INTO Shipping.Shipment (ClientID, CarrierID, ItemsShipping, EstShipDate, EstDelivery, TrackingNum, Status, DateEntered) 
+    INSERT INTO Shipping.Shipment (ClientID, CarrierID, ItemsShipping, EstShipDate, EstDelivery, TrackingNum, Status, DateEntered)
 				VALUES (client, carrier, item, shipped, deliver, track, stat);
 END//
 
 CREATE PROCEDURE newClient(IN client VARCHAR(50))
-BEGIN 
+BEGIN
     INSERT INTO Shipping.Client (BusinessName) VALUES (client) WHERE NOT EXISTS(
         SELECT BusinessName FROM Shipping.Client WHERE BusinessName=client);
 END//

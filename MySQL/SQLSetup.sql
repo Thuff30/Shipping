@@ -67,3 +67,9 @@ BEGIN
 END//
 
 DELIMITER ;
+					     
+INSERT INTO Carrier (CarrierName) VALUES ('UPS');
+INSERT INTO Carrier (CarrierName) VALUES ('USPS');
+INSERT INTO Carrier (CarrierName) VALUES ('FedEx');
+INSERT INTO Carrier (CarrierName) VALUES ('Amazon');
+INSERT INTO Carrier (CarrierName) VALUES ('DHL'); 

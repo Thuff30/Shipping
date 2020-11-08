@@ -1,9 +1,9 @@
-<?php
+?php
 	//File containt PHP fucntions to interact with MySQL database
 	require_once('SQLFunc.php');
 	
 	//Define global variables
-	$host= 'localhost';
+	$host='localhost';
 	
 	//Function to add a new user
 	function addUser($uname, $pass, $level){
@@ -54,13 +54,15 @@
 		//Establish connection and perform queries
 		$mysqli=connectdb();
 		if($check=$mysqli->query($passconf)){
-			$passcheck = password_verify($pass, $row['Password']);
-			if($passcheck==true){
-				if($results=$mysqli->query($usertable)){
-					$lines=$results->rows_affected;
-						if($lines==1){
-							$success=true;
-						}
+			while($row=$check->fetch_assoc()){
+				$passcheck = password_verify($pass, $row['Password']);
+				if($passcheck==true){
+					if($results=$mysqli->query($usertable)){
+						$lines=$results->rows_affected;
+							if($lines==1){
+								$success=true;
+							}
+					}
 				}
 			}
 		}

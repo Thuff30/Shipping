@@ -21,12 +21,12 @@
 			<tr>
 				<td class="a">Client <input list='client'>
 					<datalist id='client'>";
-					<?php clientDropdown(); ?><!--displays current list of clients from db-->
+					<?php clientDropdown();?><!--displays current list of clients from db-->
 					</datalist>
 				</td>
 				<td class="b">Carrier <input list='carrier'>
 					<datalist id='carrier'>";
-					<?php carrierDropdown();?><!--displays current list of carriers from db-->
+						<?php carrierDropdown();?><!--displays current list of carriers from db-->
 					</datalist>
 				</td>
 			</tr>

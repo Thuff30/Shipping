@@ -26,17 +26,18 @@
 
 				//Determine if form has been filled out
 				if(isset($_POST['Submit'])){
-					if($_POST['client'] && $_POST['carier'] && $_POST['shipdate'] && $_POST['status'] && $_POST['items'] && $_POST['notes'] && $_POST['tracknum']){
+					if($_POST['client'] && $_POST['carrier'] && $_POST['shipdate'] && $_POST['status'] && $_POST['items'] && $_POST['notes'] && $_POST['tracknum']){
 					$client= check_input($_POST['client']);
 					$carrier = check_input($_POST['carrier']);
 					$shipdate = check_input($_POST['shipdate']);
+					$deliverydate = check_input($_POST['deliverydate']);
 					$status = $_POST['status'];
 					$items = check_input($_POST['items']);
 					$notes = check_input($_POST['notes']);
 					$tracknum = check_input($_POST['tracknum']);
 					
 						//Call to function to insert data into database
-						if(insertShipment($client, $carrier, $items, $shipdate, $deliverydate, $tracknum, $status)){
+						if(insertShipment($client, $carrier, $items, $shipdate, $deliverydate, $tracknum, $status, $notes)){
 							echo "<h1>Shipment successfully added to database</h1>";
 						}else{
 							echo"<h2>An error occured adding this shipment</h2>

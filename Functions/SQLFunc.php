@@ -105,12 +105,11 @@
 	}
 	
 	//Function to enter a new shipment 
-	function insertShipment($client, $carrier, $items, $shipdate, $deliverydate, $tracknum, $status){
+	function insertShipment($client, $carrier, $items, $shipdate, $deliverydate, $tracknum, $status, $notes){
 		
 		//Establish variables
 		$success=false;
-		$date = date_create();
-		$dateNow = date_format($date,"Y-m-d"); 		
+		$dateNow = date("Y-m-d");
 
 	    //Find clientID and carrierID based on information submitted using function from PHPFunc   
 		$clientID = findClient($client);
@@ -118,8 +117,8 @@
 				
 		//Connect to the database and execute stored procedure
 		$mysqli = connectdb();
-		$insertstmt=$mysqli->prepare("CALL insertShip(?,?,?,?,?,?,?,?");
-		$insertstmt->bind_param("ssssssss", $clientID, $carrierID, $items, $shipdate, $deliverydate, $tracknum, $status, $datenow);
+		$insertstmt=$mysqli->prepare("CALL insertShip(?,?,?,?,?,?,?,?,?)");
+		$insertstmt->bind_param("sssssssss", $clientID, $carrierID, $items, $shipdate, $deliverydate, $tracknum, $status, $notes, $dateNow);
 		$insertstmt->execute();
 
 		//Execute query and determine success
@@ -147,7 +146,7 @@
 
 		//Execute query and determine success
 		$results=$insertstmt->affected_rows;
-		if($result>0){
+		if($results>0){
 			$success=true;
 		}
 		
@@ -264,7 +263,7 @@
 				$carrier=$row['CarrierName'];
 				$tracknum=$row['TrackingNum'];
 				$notes=$row['Notes'];
-				$entered=$row['DateEnetered'];
+				$entered=$row['DateEntered'];
 				
 				//Create an object for reference
 				$allShipments= new ShipmentClass($shipmentID, $clientID, $client, $items, $estdel, $status, $carrierID, $carrier, $tracknum, $notes, $entered);
@@ -281,16 +280,15 @@
 
 		//Establish connection and perform stored procedure
 		$mysqli=connectdb();
-		$selectstmt=$mysqli->prepare("CALL showCarriers()");
-		$selectstmt->execute();
-		$result=$selectstmt->get_result();
+		$select="SELECT BusinessName FROM Client;";
 		
 		//Populate options to dropdown
-		while($row=$results->fetch_assoc()){
-			echo "<option value='" .$row['BusinessName']. "'>" .$row['BusinessName']. "</option>";
+		if($result=$mysqli->query($select)){
+			while($row=$result->fetch_assoc()){
+				echo '<option value="' .$row['BusinessName']. '">';
+			}
 		}
 		//Close query and connection
-		$selectstmt->close();
 		$mysqli->close();
 	}
 	
@@ -299,16 +297,16 @@
 
 		//Establish connection and perform stored procedure
 		$mysqli=connectdb();
-		$selectstmt=$mysqli->prepare("CALL showClient()");
-		$selectstmt->execute();
-		$result=$selectstmt->get_result();
+		$select="SELECT CarrierName FROM Carrier;";
 
 		//Populate options to dropdown
-		while($row=$results->fetch_assoc()){
-			echo "<option value='" . $row['CarrierName'] . "'>" .$row['CarrierName'] ."</option>";
+		if($result=$mysqli->query($select)){
+			while($row=$result->fetch_assoc()){
+				echo '<option value="' . $row['CarrierName'] . '">';
+			}
 		}
+		
 		//Close query and connection
-		$selectstmt->close();
 		$mysqli->close();
 	}
 	
@@ -321,8 +319,8 @@
 		$selectstmt->bind_param("s", $business);
 		$selectstmt->execute();
 
-		if($result=$selectstmt->get_result(){
-			while($row = $results->fetch_assoc()){
+		if($result=$selectstmt->get_result()){
+			while($row=$result->fetch_assoc()){
 				$clientID=$row['ClientID'];
 			}
 		}
@@ -342,9 +340,10 @@
 		$selectstmt->bind_param("s",$carrier);
 		$selectstmt->execute();
 
-		if($result=$selectstmt->get_result(){
-		while($row=$results->fetch_assoc()){
-			$carrierID=$row['CarrierID'];
+		if($result=$selectstmt->get_result()){
+			while($row=$result->fetch_assoc()){
+				$carrierID=$row['CarrierID'];
+			}
 		}
 		//Close query and connection
 		$selectstmt->close();

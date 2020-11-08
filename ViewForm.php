@@ -7,34 +7,37 @@
 <body>
 	<form name="ViewForm" method="post" action="IndexShipment.php">
 		<table id='searchform'>
-			<th colspan=2>Search Shipments</th>
 			<tr>
-				<td class="a">Client <input type="text" list='client' name='client'>
+				<th colspan=2>Search Shipments</th>
+			</tr>
+			<tr>
+				<td class='a'>Client<input name='client' list='client'>
 					<datalist id='client'>
-					<?php clientDropdown(); ?>
+						<?php clientDropdown(); ?>
 					</datalist>
 				</td>
-				<td class="b">Carrier <input type='text' list='carrier' name='carrier'>
+				<td class='b'>Carrier<input name='carrier' list='carrier'>
 					<datalist id='carrier'>
-					<?php carrierDropdown(); ?>
+						<?php carrierDropdown(); ?>
 					</datalist>
 				</td>
 			</tr>
 			<tr>
-				<td class="a">Ship Date >= <input name='startdate' type='text'></td>
-				<td class="b">Ship Date <= <input name='enddate' type='text'></td>
+				<td class="a">Ship Date Greater Than<input name='startdate' type='text'></td>
+				<td class="b">Ship Date Less Than<input name='enddate' type='text'></td>
 			</tr>
 			<tr>
-				<td class="a">Status <input type='text' list='status' name='status'>
+				<td class="a">Status<input type='text' list='status' name='status'>
 					<datalist id='status'>
-					<option value='InTransit'>In Transit</option>
-					<option value='Delivered'>Delivered</option>
-					<option value='OnHold'>On Hold</option>
-				</datalist></td>
-				<td class="b">Tracking Number <input name='tracknum' type='text'></td>
+						<option value='InTransit'>In Transit</option>
+						<option value='Delivered'>Delivered</option>
+						<option value='OnHold'>On Hold</option>
+					</datalist>
+				</td>
+				<td class="b">Tracking Number<input name='tracknum' type='text'></td>
 			</tr>
 			<tr>
-				<td class="a"> Limit <select name='limit'>
+				<td class="a"> Limit<select name='limit'>
 					<option value='25'>25</option>
 					<option value='50'>50</option>
 					<option value='75'>75</option>
